@@ -36,18 +36,43 @@ def city_get(cty):
         response = requests.get(URL, params=params).json()
         temp = round(response['main']['temp'], 1)
         desc = response['weather'][0]['description']
-        wind = round(response['wind']['speed'], 1)
+        wind = round(response['wind']['speed'] * 3.6, 1)
     except Exception as e:
          return render_template('home.html', error_alert='The city does not exist!', place=cty)
     
     return render_template('home.html', therm=f'{temp}C°', place=cty, descy=desc, windy=f'{wind}km/h', error_alert='')
+
+@app.get('/json/<cty>')
+def city_get1(cty):
+    URL = 'https://api.openweathermap.org/data/2.5/weather'
+    load_dotenv()
+    api_key = os.getenv('API_KEY')
+    params = {
+        'q': cty,
+        'appid': api_key,
+        'units': 'metric',
+        'lang': 'en'
+    }
+    try:
+        response = requests.get(URL, params=params).json()
+        temp = round(response['main']['temp'], 1)
+        desc = response['weather'][0]['description']
+        wind = round(response['wind']['speed'], 1)
+    except Exception:
+        return {"error": f"Weather data could not be fetched for '{cty}'"}, 404
+    return {
+        "city": cty,
+        "temperature": f"{temp} °C",
+        "description": desc,
+        "wind_speed": f"{wind} m/s"
+    }
 
 @app.post('/<cty>')
 def city_post(cty):
      CITY = request.form.get('nm')
      return redirect(url_for('city_get', cty=CITY))
      
-    
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
 
