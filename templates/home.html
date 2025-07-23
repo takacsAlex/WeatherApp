@@ -11,13 +11,27 @@
         <h1>What's the temperature right now?</h1>
     </div>
     <div class="homerseklet">
-        <p>{{therm}}</p>
+        <table>
+            <tr>
+                <td class="dataDesc">Description:</td>
+                <td id="DescDesc">{{descy}}</td>
+            </tr>
+            <tr>
+                <td class="dataDesc" id="TempDesc">Temperature:</td>
+                <td id="TempDesc">{{therm}}</td>
+            </tr>
+            <tr>
+                <td class="dataDesc">Wind:</td>
+                <td id="WindDesc">{{windy}}</td>
+            </tr>
+        </table>
     </div>
     <div class="mainDiv">
         <form action="#" method="post">
             <p>Enter the name of the city:</p>
-            <p><input type="text" name="nm" id="inputForm" value={{place}}>
+            <p><input type="text" name="nm" id="inputForm" value=''>
             <input type="submit" value="Submit" id="inputGomb"></p>
+            <p id="errorAlert">{{error_alert}}</p>
         </form>
     </div>
 </body>

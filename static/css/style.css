@@ -36,9 +36,7 @@ p {
 }
 
 .homerseklet p {
-    font-size: 90pt;
     text-align: center;
-    margin-top: 80px;
 }
 
 .title img {
@@ -89,4 +87,38 @@ p {
 
 #inputGomb:hover {
     font-weight: bold;
+}
+
+table {
+    height: 300px;
+    width: 400px;
+}
+
+tr {
+    height: 100px;
+}
+
+td {
+    font-size: 24pt;
+    text-align: center;
+    padding: 10px;
+    margin: 0px;
+}
+
+.dataDesc {
+    text-align: left;
+
+}
+
+#TempDesc {
+    border-top: 4px solid white;
+    border-bottom: 4px solid white;
+}
+
+#errorAlert {
+    font-size: 20pt;
+    color: red;
+    font-weight: bold;
+    padding-left: 20px;
+    margin-top: 0px;
 }

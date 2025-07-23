@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.get('/')
 def home_get():
-        return render_template('home.html', therm='--C°', place='')
+        return render_template('home.html', place='', therm='--C°', descy='--', windy='--km/h', error_alert='')
 
 @app.post('/')
 def home_post():
@@ -32,10 +32,15 @@ def city_get(cty):
         'lang': 'en'
     }        
 
-    response = requests.get(URL, params=params).json()
-    temp = round(response['main']['temp'], 1)
+    try:
+        response = requests.get(URL, params=params).json()
+        temp = round(response['main']['temp'], 1)
+        desc = response['weather'][0]['description']
+        wind = round(response['wind']['speed'], 1)
+    except Exception as e:
+         return render_template('home.html', error_alert='The city does not exist!', place=cty)
     
-    return render_template('home.html', therm=f'{temp}C°', place=cty)
+    return render_template('home.html', therm=f'{temp}C°', place=cty, descy=desc, windy=f'{wind}km/h', error_alert='')
 
 @app.post('/<cty>')
 def city_post(cty):
@@ -45,3 +50,4 @@ def city_post(cty):
     
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+
